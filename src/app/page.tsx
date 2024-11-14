@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
-import Image from 'next/image'
+// import Image from 'next/image'  // 사용하지 않는 경우 주석 처리 또는 삭제
 import Link from 'next/link'
 import { useState } from 'react'
 import {
