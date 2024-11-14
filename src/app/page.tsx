@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { regions } from '@/data/regions' // regions 데이터를 가져옵니다.
+import { accommodationDetails } from '@/data/accommodationDetails' // accommodationDetails 데이터를 가져옵니다.
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -93,9 +94,8 @@ export default function Home() {
                         />
                       </CardContent>
                       <CardFooter className="flex flex-col items-start p-4">
-                        <h3 className="font-semibold mb-2">{region.name} 멋진 숙소 {item}</h3>
-                        <p className="text-gray-500 mb-2">한국</p>
-                        <p className="font-semibold">₩100,000 / 박</p>
+                        <h3 className="font-semibold mb-2">{accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length].title}</h3>
+                        <p className="text-gray-500 mb-2">{accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length].description}</p>
                       </CardFooter>
                     </Card>
                   );
@@ -122,7 +122,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li>대표전화 : 1511-0000</li>
                 <li>주소 : 경기도 하남시 미사강변중앙로 210,405호(망월동,메디피아타워)</li>
-                <li>Email : mansil@support.com</li>
+                <li>Email : mansil@support.com</li>
               </ul>
             </div>
           </div>
