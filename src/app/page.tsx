@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
-// import Image from 'next/image'  // 사용하지 않는 경우 주석 처리 또는 삭제
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
@@ -13,19 +13,20 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { hotelImages } from '@/data/imageUrls'
+import { regions } from '@/data/regions' // regions 데이터를 가져옵니다.
 
 export default function Home() {
-  const regions = ["서울", "부산", "제주", "강원", "경기", "인천"]
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-rose-500 text-2xl font-bold">STAY Inside</Link>
-          <nav className="hidden md:flex items-center space-x-4">
+        <div className="container mx-auto px-4 py-4 flex items-center">
+          <Link href="/" className="text-rose-500 text-2xl font-bold mr-auto">STAY Inside</Link>
+          <nav className="hidden md:flex items-center justify-center space-x-4">
             {regions.map((region) => (
-              <Link key={region} href={`#${region}`} className="text-gray-500 hover:text-gray-700">{region}</Link>
+              <Link key={region.name} href={`#${region.name}`} className="text-gray-500 hover:text-gray-700">{region.name}</Link>
             ))}
           </nav>
           <div className="flex items-center space-x-4">
@@ -37,8 +38,8 @@ export default function Home() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 {regions.map((region) => (
-                  <DropdownMenuItem key={region} asChild>
-                    <Link href={`#${region}`}>{region}</Link>
+                  <DropdownMenuItem key={region.name} asChild>
+                    <Link href={`#${region.name}`}>{region.name}</Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -48,43 +49,60 @@ export default function Home() {
       </header>
 
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <section>
+        <section className="mb-16">
           <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {regions.map((region) => (
-              <Card key={region}>
-                <CardContent className="p-0">
-                  <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                    <span className="text-gray-600">{region} 이미지</span>
+              <Link href="#" key={region.name} className="group">
+                <div className="relative overflow-hidden rounded-lg">
+                  <Image
+                    src={region.image} // 문자열 경로를 직접 사용
+                    alt={`${region.name} 이미지`}
+                    width={600}
+                    height={400}
+                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+                  <div className="absolute bottom-0 left-0 p-4 text-white">
+                    <h3 className="text-xl font-bold mb-1">{region.name}</h3>
+                    <p className="text-sm">{region.description}</p>
                   </div>
-                </CardContent>
-                <CardFooter className="flex flex-col items-start p-4">
-                  <h3 className="font-semibold mb-2">{region}</h3>
-                  <p className="text-gray-500 mb-2">인기 여행지</p>
-                </CardFooter>
-              </Card>
+                </div>
+              </Link>
             ))}
           </div>
         </section>
 
         <section className="mt-12">
           <h2 className="text-2xl font-bold mb-6">추천 숙소</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <Card key={item}>
-                <CardContent className="p-0">
-                  <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                    <span className="text-gray-600">숙소 {item} 이미지</span>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex flex-col items-start p-4">
-                  <h3 className="font-semibold mb-2">멋진 숙소 {item}</h3>
-                  <p className="text-gray-500 mb-2">서울, 한국</p>
-                  <p className="font-semibold">₩100,000 / 박</p>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+          {regions.map((region, index) => (
+            <div key={region.name} className="mb-8">
+              <h3 className="text-xl font-semibold mb-4">{region.name}</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {[1, 2, 3, 4].map((item) => {
+                  const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
+                  return (
+                    <Card key={item}>
+                      <CardContent className="p-0">
+                        <Image
+                          src={imageUrl.toString()}
+                          alt={`${region.name} 숙소 ${item} 이미지`}
+                          width={800}
+                          height={600}
+                          className="w-full h-48 object-cover rounded-t-lg" // 상단 라운딩 클래스 추가
+                        />
+                      </CardContent>
+                      <CardFooter className="flex flex-col items-start p-4">
+                        <h3 className="font-semibold mb-2">{region.name} 멋진 숙소 {item}</h3>
+                        <p className="text-gray-500 mb-2">한국</p>
+                        <p className="font-semibold">₩100,000 / 박</p>
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </section>
       </main>
 
@@ -94,9 +112,9 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">회사 정보</h3>
               <ul className="space-y-2 text-sm">
-                <li>상호 : 주식회사 만실 | 대표이사 : 신승문</li>
+                <li>상호 : 주식회사 만실</li>
+                <li>대표이사 : 신승문</li>
                 <li>사업자등록번호 : 728-88-02744</li>
-                <li>개인정보관리책임자 : 신승문</li>
               </ul>
             </div>
             <div>
