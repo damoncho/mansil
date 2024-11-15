@@ -14,7 +14,7 @@ export const accommodationDetails = [
   },
   {
     title: "캔들하우스",
-    description: "연예인 별장",
+    description: "연예인 전용 별장",
   },
   {
     title: "207마일",
