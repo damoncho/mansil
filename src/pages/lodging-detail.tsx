@@ -15,7 +15,7 @@ export default function LodgingDetail() {
     <div className="container mx-auto px-4 py-8">
       <Link href="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; 목록으로 돌아가기</Link>
       
-      <h1 className="text-3xl font-bold mb-6">서울 시내 중심의 아늑한 아파트</h1>
+      <h1 className="text-3xl font-bold mb-6">강화 109 하우스</h1>
       
       <div className="flex items-center justify-between mb-6">
         <div className="text-2xl font-semibold">₩150,000 / 박</div>
