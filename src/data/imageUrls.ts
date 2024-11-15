@@ -25,4 +25,5 @@ export const regionImages = {
     "https://yaimg.yanolja.com/v5/2024/04/05/13/1280/661002d1983e08.44446970.jpg",
     "https://yaimg.yanolja.com/v5/2024/11/12/07/1280/67330132645ed2.98972318.jpg",
     "https://yaimg.yanolja.com/v5/2024/08/22/13/1280/66c744437bd028.31761786.jpg",
+    "https://yaimg.yanolja.com/v5/2022/11/09/09/1280/636b78cc630bb8.12482289.jpg",
   ];
