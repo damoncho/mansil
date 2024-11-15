@@ -82,22 +82,25 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {[1, 2, 3, 4].map((item) => {
                   const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
+                  const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
                   return (
-                    <Card key={item}>
-                      <CardContent className="p-0">
-                        <Image
-                          src={imageUrl.toString()}
-                          alt={`${region.name} 숙소 ${item} 이미지`}
-                          width={800}
-                          height={600}
-                          className="w-full h-48 object-cover rounded-t-lg" // 상단 라운딩 클래스 추가
-                        />
-                      </CardContent>
-                      <CardFooter className="flex flex-col items-start p-4">
-                        <h3 className="font-semibold mb-2">{accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length].title}</h3>
-                        <p className="text-gray-500 mb-2">{accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length].description}</p>
-                      </CardFooter>
-                    </Card>
+                    <Link href="/lodging-detail" key={item}>
+                      <Card>
+                        <CardContent className="p-0">
+                          <Image
+                            src={imageUrl.toString()}
+                            alt={`${region.name} 숙소 ${item} 이미지`}
+                            width={800}
+                            height={600}
+                            className="w-full h-48 object-cover rounded-t-lg" // 상단 라운딩 클래스 추가
+                          />
+                        </CardContent>
+                        <CardFooter className="flex flex-col items-start p-4">
+                          <h3 className="font-semibold mb-2">{accommodation.title}</h3>
+                          <p className="text-gray-500 mb-2">{accommodation.description}</p>
+                        </CardFooter>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>
@@ -113,7 +116,7 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">회사 정보</h3>
               <ul className="space-y-2 text-sm">
                 <li>상호 : 주식회사 만실</li>
-                <li>대표이사 : 신승문</li>
+                <li>대표 : 신승문</li>
                 <li>사업자등록번호 : 728-88-02744</li>
               </ul>
             </div>

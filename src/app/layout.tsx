@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "./globals.css"; // 전역 스타일을 적용하기 위해 import
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
