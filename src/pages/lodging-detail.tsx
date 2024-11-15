@@ -80,7 +80,7 @@ export default function LodgingDetail() {
             <CardContent className="p-6">
               <h3 className="text-xl font-semibold mb-4">숙소 설명</h3>
               <p className="mb-4">
-                이 아늑한 아파트는 서울 시내 중심에 위치해 있어 편리한 교통과 함께 도시의 주요 명소들을 쉽게 방문할 수 있습니다. 
+                109 하우스는 서울 시내 중심에 위치해 있어 편리한 교통과 함께 도시의 주요 명소들을 쉽게 방문할 수 있습니다. 
                 현대적인 인테리어와 편안한 분위기로 여행객들에게 안락한 휴식 공간을 제공합니다.
               </p>
               <p className="mb-4">
