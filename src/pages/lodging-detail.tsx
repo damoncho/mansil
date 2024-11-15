@@ -143,7 +143,7 @@ export default function LodgingDetail() {
                     <span className="font-semibold">5.0</span>
                   </div>
                   <p className="text-gray-700">
-                    "정말 좋은 숙소였습니다. 깨끗하고 위치도 좋아서 편하게 지냈어요. 호스트님도 친절하셔서 다음에 또 이용하고 싶어요!"
+                    &quot;정말 좋은 숙소였습니다. 깨끗하고 위치도 좋아서 편하게 지냈어요. 호스트님도 친절하셔서 다음에 또 이용하고 싶어요!&quot;
                   </p>
                   <p className="text-gray-500 text-sm mt-2">- 김철수, 2023년 5월</p>
                 </div>
@@ -153,7 +153,7 @@ export default function LodgingDetail() {
                     <span className="font-semibold">4.5</span>
                   </div>
                   <p className="text-gray-700">
-                    "전체적으로 만족스러웠습니다. 다만 주변이 조금 시끄러워서 예민하신 분들은 참고하세요."
+                    &quot;전체적으로 만족스러웠습니다. 다만 주변이 조금 시끄러워서 예민하신 분들은 참고하세요.&quot;
                   </p>
                   <p className="text-gray-500 text-sm mt-2">- 이영희, 2023년 4월</p>
                 </div>
