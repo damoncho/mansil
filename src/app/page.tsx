@@ -30,14 +30,14 @@ export default function Home() {
                       href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
                       key={item}
                     >
-                      <Card>
+                      <Card className="hover:shadow-lg transition-shadow duration-300">
                         <CardContent className="p-0">
                           <Image
                             src={imageUrl.toString()}
                             alt={`${region.name} 숙소 ${item} 이미지`}
                             width={800}
                             height={600}
-                            className="w-full h-48 object-cover rounded-t-lg" // 상단 라운딩 클래스 추가
+                            className="w-full h-48 object-cover rounded-t-lg"
                           />
                         </CardContent>
                         <CardFooter className="flex flex-col items-start p-4">
