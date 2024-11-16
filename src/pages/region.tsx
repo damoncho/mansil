@@ -19,19 +19,10 @@ export default function RegionListings() {
 
   useEffect(() => {
     if (router.isReady) { // router.isReady가 true일 때만 실행
-      if (name) {
-        setRegionName(name as string);
-        localStorage.setItem('regionName', name as string);
-      } else {
-        const storedRegionName = localStorage.getItem('regionName');
-        if (storedRegionName) {
-          setRegionName(storedRegionName);
-        }
-      }
-    } else {
-      const storedRegionName = localStorage.getItem('regionName');
+      const storedRegionName = name || localStorage.getItem('regionName');
       if (storedRegionName) {
-        setRegionName(storedRegionName);
+        setRegionName(storedRegionName as string);
+        localStorage.setItem('regionName', storedRegionName as string);
       }
     }
   }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
