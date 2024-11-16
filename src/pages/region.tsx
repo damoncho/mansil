@@ -40,7 +40,8 @@ export default function RegionListings() {
         <div key={region.name} className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {shuffledAccommodations.map((accommodation, index) => {
-              const imageUrl = hotelImages[index % hotelImages.length];
+              const randomImageIndex = Math.floor(Math.random() * hotelImages.length);
+              const imageUrl = hotelImages[randomImageIndex];
               return (
                 <Link href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} key={index}>
                   <Card className="hover:shadow-lg transition-shadow duration-300">
