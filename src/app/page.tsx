@@ -27,7 +27,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {regions.map((region) => (
               <Link 
-                href={`/region?name=${region.name}`} 
+                href={`/region?name=${encodeURIComponent(region.name)}`} // encodeURIComponent 사용
                 key={region.name} 
                 className="group"
                 onClick={() => handleRegionClick(region.name)} // 클릭 시 지역 이름 저장
