@@ -28,6 +28,11 @@ export default function RegionListings() {
           setRegionName(storedRegionName);
         }
       }
+    } else {
+      const storedRegionName = localStorage.getItem('regionName');
+      if (storedRegionName) {
+        setRegionName(storedRegionName);
+      }
     }
   }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
 
