@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image'
+import Link from 'next/link' // 'Link' 컴포넌트 import 추가
 import { useRouter } from 'next/navigation'; // App Router에서 사용
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
