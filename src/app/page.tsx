@@ -10,6 +10,10 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
+  const handleRegionClick = (regionName: string) => {
+    localStorage.setItem('regionName', regionName);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
@@ -18,7 +22,12 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {regions.map((region) => (
-              <Link href={`/region?name=${region.name}`} key={region.name} className="group">
+              <Link 
+                href={`/region?name=${region.name}`} 
+                key={region.name} 
+                className="group"
+                onClick={() => handleRegionClick(region.name)} // 클릭 시 지역 이름 저장
+              >
                 <div className="relative overflow-hidden rounded-lg">
                   <Image
                     src={region.image} // 문자열 경로를 직접 사용
