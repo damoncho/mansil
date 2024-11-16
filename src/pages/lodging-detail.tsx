@@ -24,8 +24,10 @@ export default function LodgingDetail() {
     if (router.isReady && title) {
       const foundAccommodation = accommodationDetails.find(acc => acc.title === title);
       setAccommodation(foundAccommodation || null);
+    } else {
+      setAccommodation(null); // title이 없을 때 상태 초기화
     }
-  }, [router.isReady, title]);
+  }, [router.isReady, title]); // 의존성 배열에 title 추가
 
   const handleBookingClick = () => {
     if (accommodation && accommodation.link) {
