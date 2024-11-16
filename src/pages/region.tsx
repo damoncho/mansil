@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'; // App Router에서 사용
+import { useSearchParams } from 'next/navigation'; // URL 쿼리 파라미터를 가져오기 위해 사용
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
@@ -11,9 +12,8 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 const RegionPage = () => {
-  const router = useRouter();
-  const { name } = router.query;
-  const regionName = Array.isArray(name) ? name[0] : name;
+  const searchParams = useSearchParams();
+  const regionName = searchParams ? searchParams.get('name') : null; // 'searchParams'가 null일 수 있으므로 조건부로 처리
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
