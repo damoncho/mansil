@@ -10,8 +10,15 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function RegionListings({ initialRegionName }) {
-  const [regionName] = useState(initialRegionName); // setRegionName 제거
+  const [regionName, setRegionName] = useState(initialRegionName);
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
+
+  useEffect(() => {
+    const storedRegionName = localStorage.getItem('regionName');
+    if (storedRegionName) {
+      setRegionName(storedRegionName);
+    }
+  }, []);
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
