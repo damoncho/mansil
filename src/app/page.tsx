@@ -1,7 +1,9 @@
 "use client";
 
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from 'next/link' // 'Link' 컴포넌트 import 추가
+import { useSearchParams } from 'next/navigation'; // URL 쿼리 파라미터를 가져오기 위해 사용
+import { useRouter } from 'next/navigation'; // App Router에서 사용
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { regions } from '@/data/regions' // 'regions' import 추가
@@ -10,38 +12,14 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const regionName = searchParams ? searchParams.get('name') : null; // 'searchParams'가 null일 수 있으므로 조건부로 처리
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {regions.map((region) => (
-              <Link 
-                href={`/region?name=${encodeURIComponent(region.name)}`} // encodeURIComponent 사용
-                key={region.name} 
-                className="group"
-              >
-                <div className="relative overflow-hidden rounded-lg">
-                  <Image
-                    src={region.image} // 문자열 경로를 직접 사용
-                    alt={`${region.name} 이미지`}
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
-                  <div className="absolute bottom-0 left-0 p-4 text-white">
-                    <h3 className="text-xl font-bold mb-1">{region.name}</h3>
-                    <p className="text-sm">{region.description}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
+        <PopularRegions />
         <section className="mt-12">
           <h2 className="text-2xl font-bold mb-6">추천 숙소</h2>
           {regions.map((region, index) => (
@@ -84,3 +62,41 @@ export default function Home() {
     </div>
   )
 }
+
+const PopularRegions = () => {
+  const router = useRouter();
+
+  const handleCardClick = (regionName: string) => {
+    router.push(`/region?name=${encodeURIComponent(regionName)}`);
+  };
+
+  return (
+    <section className="mb-16">
+      <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {regions.map((region) => (
+          <div 
+            key={region.name} 
+            className="group cursor-pointer"
+            onClick={() => handleCardClick(region.name)}
+          >
+            <div className="relative overflow-hidden rounded-lg">
+              <Image
+                src={region.image} // 문자열 경로를 직접 사용
+                alt={`${region.name} 이미지`}
+                width={600}
+                height={400}
+                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+              <div className="absolute bottom-0 left-0 p-4 text-white">
+                <h3 className="text-xl font-bold mb-1">{region.name}</h3>
+                <p className="text-sm">{region.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
