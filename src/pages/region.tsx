@@ -2,23 +2,19 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react' // useRouter 제거
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
-export default function RegionListings({ initialRegionName }) {
-  const [regionName, setRegionName] = useState(initialRegionName);
+const RegionPage = () => {
+  const router = useRouter();
+  const { name } = router.query;
+  const regionName = Array.isArray(name) ? name[0] : name;
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
-
-  useEffect(() => {
-    const storedRegionName = localStorage.getItem('regionName');
-    if (storedRegionName) {
-      setRegionName(storedRegionName);
-    }
-  }, []);
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
@@ -65,8 +61,4 @@ export default function RegionListings({ initialRegionName }) {
   )
 }
 
-export async function getServerSideProps(context) {
-  const { name } = context.query;
-  const initialRegionName = name ? decodeURIComponent(name) : '';
-  return { props: { initialRegionName } };
-}
+export default RegionPage;
