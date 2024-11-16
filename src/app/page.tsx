@@ -62,7 +62,7 @@ export default function Home() {
 const PopularRegions = () => {
   const router = useRouter();
 
-  const handleCardClick = (regionName: string) => {
+  const handleCardClick = (regionName: string) => { // 타입 오류 수정: string으로 설정
     router.push(`/region?name=${encodeURIComponent(regionName)}`);
   };
 
