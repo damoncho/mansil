@@ -12,7 +12,6 @@ import Footer from '@/components/footer'
 
 const RegionPage = () => {
   const searchParams = useSearchParams();
-  const regionName = searchParams ? searchParams.get('name') : null; // 'searchParams'가 null일 수 있으므로 조건부로 처리
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
@@ -26,8 +25,8 @@ const RegionPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <h2 className="text-2xl font-bold mb-6">{regionName ? `${regionName} 추천 숙소` : '추천 숙소'}</h2>
-        <div key={regionName} className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">추천 숙소</h2>
+        <div className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {shuffledAccommodations.map((accommodation, index) => {
               const randomImageIndex = Math.floor(Math.random() * hotelImages.length);
@@ -38,7 +37,7 @@ const RegionPage = () => {
                     <CardContent className="p-0">
                       <Image
                         src={imageUrl.toString()}
-                        alt={`${regionName} 숙소 ${index + 1} 이미지`}
+                        alt={`숙소 ${index + 1} 이미지`}
                         width={800}
                         height={600}
                         className="w-full h-48 object-cover rounded-t-lg"

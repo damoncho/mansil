@@ -13,7 +13,6 @@ import Footer from '@/components/footer'
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const regionName = searchParams ? searchParams.get('name') : null; // 'searchParams'가 null일 수 있으므로 조건부로 처리
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
