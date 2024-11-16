@@ -173,7 +173,7 @@ export default function LodgingDetail() {
           </TabsContent>
         </Tabs>
       </main>
-      <Footer className="bg-gray-100" /> {/* Footer 컴포넌트를 사용하여 푸터를 추가하고 배경색을 조정 */}
+      <Footer /> {/* Footer 컴포넌트를 사용하여 푸터를 추가 */}
     </div>
   )
 }
