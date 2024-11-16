@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'; // App Router에서 사용
 import { useSearchParams } from 'next/navigation'; // URL 쿼리 파라미터를 가져오기 위해 사용
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
