@@ -183,5 +183,4 @@ export default function LodgingDetail() {
       </main>
       <Footer /> {/* Footer 컴포넌트를 사용하여 푸터를 추가 */}
     </div>
-  )
-}
+  )}
