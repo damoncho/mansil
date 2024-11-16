@@ -14,6 +14,10 @@ export default function Home() {
     localStorage.setItem('regionName', regionName);
   };
 
+  const handleAccommodationClick = (accommodationTitle: string) => {
+    localStorage.setItem('accommodationName', accommodationTitle);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
@@ -57,7 +61,11 @@ export default function Home() {
                   const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
                   const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
                   return (
-                    <Link href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} key={item}>
+                    <Link 
+                      href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
+                      key={item}
+                      onClick={() => handleAccommodationClick(accommodation.title)} // 클릭 시 숙소 이름 저장
+                    >
                       <Card>
                         <CardContent className="p-0">
                           <Image
