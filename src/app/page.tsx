@@ -1,7 +1,7 @@
 "use client";
 
 import Image from 'next/image'
-import Link from 'next/link'
+import { useNavigate } from 'react-router-dom'; // useNavigate를 import
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { regions } from '@/data/regions' // regions 데이터를 가져옵니다.
@@ -10,12 +10,16 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   const handleRegionClick = (regionName: string) => {
     localStorage.setItem('regionName', regionName);
+    navigate(`/region?name=${regionName}`); // useNavigate로 경로 변경
   };
 
   const handleAccommodationClick = (accommodationTitle: string) => {
     localStorage.setItem('accommodationName', accommodationTitle);
+    navigate(`/lodging-detail?title=${encodeURIComponent(accommodationTitle)}`); // useNavigate로 경로 변경
   };
 
   return (
@@ -26,11 +30,10 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {regions.map((region) => (
-              <Link 
-                href={`/region?name=${region.name}`} 
+              <div 
                 key={region.name} 
-                className="group"
-                onClick={() => handleRegionClick(region.name)} // 클릭 시 지역 이름 저장
+                className="group cursor-pointer"
+                onClick={() => handleRegionClick(region.name)} // 클릭 시 지역 이름 저장 및 경로 변경
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <Image
@@ -46,7 +49,7 @@ export default function Home() {
                     <p className="text-sm">{region.description}</p>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -61,10 +64,10 @@ export default function Home() {
                   const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
                   const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
                   return (
-                    <Link 
-                      href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
+                    <div 
                       key={item}
-                      onClick={() => handleAccommodationClick(accommodation.title)} // 클릭 시 숙소 이름 저장
+                      className="cursor-pointer"
+                      onClick={() => handleAccommodationClick(accommodation.title)} // 클릭 시 숙소 이름 저장 및 경로 변경
                     >
                       <Card>
                         <CardContent className="p-0">
@@ -81,7 +84,7 @@ export default function Home() {
                           <p className="text-gray-500 mb-2">{accommodation.description}</p>
                         </CardFooter>
                       </Card>
-                    </Link>
+                    </div>
                   );
                 })}
               </div>

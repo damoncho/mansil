@@ -1,40 +1,33 @@
 "use client";
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'; // useRouter 훅을 import
+import { useNavigate, useLocation } from 'react-router-dom'; // useNavigate와 useLocation 훅을 import
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
-// import { regions } from '@/data/regions' // 사용되지 않는 import는 제거
 import Header from '@/components/header' // Header 컴포넌트를 import
 import Footer from '@/components/footer' // Footer 컴포넌트를 import
 
 export default function RegionListings() {
-  const router = useRouter();
-  const { name } = router.query; // 쿼리에서 지역 이름을 가져옴
+  const navigate = useNavigate();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const name = query.get('name'); // 쿼리에서 지역 이름을 가져옴
   const [regionName, setRegionName] = useState('');
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (router.isReady) { // router.isReady가 true일 때만 실행
-      if (name) {
-        setRegionName(name as string);
-        localStorage.setItem('regionName', name as string);
-      } else {
-        const storedRegionName = localStorage.getItem('regionName');
-        if (storedRegionName) {
-          setRegionName(storedRegionName);
-        }
-      }
+    if (name) {
+      setRegionName(name);
+      localStorage.setItem('regionName', name);
     } else {
       const storedRegionName = localStorage.getItem('regionName');
       if (storedRegionName) {
         setRegionName(storedRegionName);
       }
     }
-  }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
+  }, [name]); // 의존성 배열에 name 추가
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
@@ -54,7 +47,7 @@ export default function RegionListings() {
               const randomImageIndex = Math.floor(Math.random() * hotelImages.length);
               const imageUrl = hotelImages[randomImageIndex];
               return (
-                <Link href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} key={index}>
+                <div onClick={() => navigate(`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`)} key={index}>
                   <Card className="hover:shadow-lg transition-shadow duration-300">
                     <CardContent className="p-0">
                       <Image
@@ -70,7 +63,7 @@ export default function RegionListings() {
                       <p className="text-gray-500 mb-2">{accommodation.description}</p>
                     </CardFooter>
                   </Card>
-                </Link>
+                </div>
               );
             })}
           </div>
