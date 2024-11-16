@@ -18,13 +18,15 @@ export default function RegionListings() {
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (router.isReady && name) { // router.isReady를 추가하여 라우터가 준비되었는지 확인
-      setRegionName(name as string); // name이 존재할 때만 setRegionName 호출
-      localStorage.setItem('regionName', name as string); // 지역 이름을 로컬 스토리지에 저장
-    } else {
-      const storedRegionName = localStorage.getItem('regionName');
-      if (storedRegionName) {
-        setRegionName(storedRegionName); // 로컬 스토리지에서 지역 이름을 가져옴
+    if (router.isReady) { // router.isReady가 true일 때만 실행
+      if (name) {
+        setRegionName(name as string);
+        localStorage.setItem('regionName', name as string);
+      } else {
+        const storedRegionName = localStorage.getItem('regionName');
+        if (storedRegionName) {
+          setRegionName(storedRegionName);
+        }
       }
     }
   }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
