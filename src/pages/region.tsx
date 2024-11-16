@@ -23,6 +23,9 @@ export default function RegionListings() {
       if (storedRegionName) {
         setRegionName(storedRegionName as string);
         localStorage.setItem('regionName', storedRegionName as string);
+      } else {
+        // 지역 이름이 없을 경우 기본값 설정 또는 에러 처리
+        setRegionName('기본 지역 이름');
       }
     }
   }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
