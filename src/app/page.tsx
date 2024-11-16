@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import Link from 'next/link' // 'Link' 컴포넌트 import 추가
 import { useRouter } from 'next/navigation'; // App Router에서 사용
-import { useEffect, useState } from 'react'; // useEffect와 useState 추가
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { regions } from '@/data/regions' // 'regions' import 추가
@@ -12,17 +11,6 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
-  const [accommodations, setAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
-
-  useEffect(() => {
-    if (regions.length > 0) {
-      const initialAccommodations = regions.map((region, index) => {
-        return accommodationDetails.slice(index * 4, (index + 1) * 4);
-      }).flat();
-      setAccommodations(initialAccommodations);
-    }
-  }, [regions]);
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
@@ -34,18 +22,19 @@ export default function Home() {
             <div key={region.name} className="mb-8">
               <h3 className="text-xl font-semibold mb-4">{region.name}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {accommodations.slice(index * 4, (index + 1) * 4).map((accommodation, itemIndex) => {
-                  const imageUrl = hotelImages[(index * 4 + itemIndex) % hotelImages.length];
+                {[1, 2, 3, 4].map((item) => {
+                  const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
+                  const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
                   return (
                     <Link 
                       href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
-                      key={itemIndex}
+                      key={item}
                     >
                       <Card className="hover:shadow-lg transition-shadow duration-300">
                         <CardContent className="p-0">
                           <Image
                             src={imageUrl.toString()}
-                            alt={`${region.name} 숙소 ${itemIndex + 1} 이미지`}
+                            alt={`${region.name} 숙소 ${item} 이미지`}
                             width={800}
                             height={600}
                             className="w-full h-48 object-cover rounded-t-lg"
