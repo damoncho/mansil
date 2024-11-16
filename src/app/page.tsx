@@ -4,20 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
-import { regions } from '@/data/regions' // regions 데이터를 가져옵니다.
-import { accommodationDetails } from '@/data/accommodationDetails' // accommodationDetails 데이터를 가져옵니다.
+import { regions } from '@/data/regions' // 'regions' import 추가
+import { accommodationDetails } from '@/data/accommodationDetails' // 'accommodationDetails' import 추가
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
-  const handleRegionClick = (regionName: string) => {
-    localStorage.setItem('regionName', regionName);
-  };
-
-  const handleAccommodationClick = (accommodationTitle: string) => {
-    localStorage.setItem('accommodationName', accommodationTitle);
-  };
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
@@ -30,7 +22,6 @@ export default function Home() {
                 href={`/region?name=${encodeURIComponent(region.name)}`} // encodeURIComponent 사용
                 key={region.name} 
                 className="group"
-                onClick={() => handleRegionClick(region.name)} // 클릭 시 지역 이름 저장
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <Image
@@ -64,7 +55,6 @@ export default function Home() {
                     <Link 
                       href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
                       key={item}
-                      onClick={() => handleAccommodationClick(accommodation.title)} // 클릭 시 숙소 이름 저장
                     >
                       <Card>
                         <CardContent className="p-0">
