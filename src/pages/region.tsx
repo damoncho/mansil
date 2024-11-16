@@ -18,7 +18,7 @@ export default function RegionListings() {
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (name) {
+    if (router.isReady && name) { // router.isReady를 추가하여 라우터가 준비되었는지 확인
       setRegionName(name as string); // name이 존재할 때만 setRegionName 호출
       localStorage.setItem('regionName', name as string); // 지역 이름을 로컬 스토리지에 저장
     } else {
@@ -27,7 +27,7 @@ export default function RegionListings() {
         setRegionName(storedRegionName); // 로컬 스토리지에서 지역 이름을 가져옴
       }
     }
-  }, [name]);
+  }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {

@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -17,9 +18,14 @@ const Image = dynamic(() => import('next/image'), { ssr: false })
 export default function LodgingDetail() {
   const router = useRouter();
   const { title } = router.query;
+  const [accommodation, setAccommodation] = useState<{ title: string; description: string; link: string; } | null>(null);
 
-  // title에 해당하는 숙소 정보를 찾음
-  const accommodation = accommodationDetails.find(acc => acc.title === title);
+  useEffect(() => {
+    if (router.isReady && title) {
+      const foundAccommodation = accommodationDetails.find(acc => acc.title === title);
+      setAccommodation(foundAccommodation || null);
+    }
+  }, [router.isReady, title]);
 
   const handleBookingClick = () => {
     if (accommodation && accommodation.link) {
