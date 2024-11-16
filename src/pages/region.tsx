@@ -12,17 +12,19 @@ import Footer from '@/components/footer' // Footer 컴포넌트를 import
 
 export default function RegionListings() {
   const router = useRouter();
-  const { name } = router.query; // 쿼리에서 지역 이름을 가져옴
   const [regionName, setRegionName] = useState('');
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (router.isReady && name) { // router.isReady와 name이 존재할 때만 실행
-      const storedRegionName = decodeURIComponent(name as string); // decodeURIComponent 사용
-      setRegionName(storedRegionName);
-      localStorage.setItem('regionName', storedRegionName);
+    if (router.isReady) { // router.isReady가 true일 때만 실행
+      const { name } = router.query; // 쿼리에서 지역 이름을 가져옴
+      if (name) {
+        const storedRegionName = decodeURIComponent(name as string); // decodeURIComponent 사용
+        setRegionName(storedRegionName);
+        localStorage.setItem('regionName', storedRegionName);
+      }
     }
-  }, [router.isReady, name]); // 의존성 배열에 router.isReady와 name 추가
+  }, [router.isReady, router.query]); // 의존성 배열에 router.isReady와 router.query 추가
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
