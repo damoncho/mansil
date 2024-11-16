@@ -18,7 +18,7 @@ export default function RegionListings() {
 
   useEffect(() => {
     if (router.isReady && name) { // router.isReady와 name이 존재할 때만 실행
-      const storedRegionName = name as string;
+      const storedRegionName = decodeURIComponent(name as string); // decodeURIComponent 사용
       setRegionName(storedRegionName);
       localStorage.setItem('regionName', storedRegionName);
     }
