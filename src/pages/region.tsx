@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'; // URL 쿼리 파라미터를 가져오기 위해 사용
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
@@ -11,7 +10,6 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 const RegionPage = () => {
-  const searchParams = useSearchParams();
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
