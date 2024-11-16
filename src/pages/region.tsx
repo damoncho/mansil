@@ -3,15 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu } from 'lucide-react'
 import { useRouter } from 'next/router'; // useRouter 훅을 import
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
@@ -22,7 +14,6 @@ import Footer from '@/components/footer' // Footer 컴포넌트를 import
 export default function RegionListings() {
   const router = useRouter();
   const { name } = router.query; // 쿼리에서 지역 이름을 가져옴
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [regionName, setRegionName] = useState('');
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 

@@ -1,17 +1,7 @@
 "use client";
 
-import { Menu, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { regions } from '@/data/regions' // regions 데이터를 가져옵니다.
@@ -20,8 +10,6 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
