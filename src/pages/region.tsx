@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'; // useRouter 훅을 import
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
-import { regions } from '@/data/regions'
+// import { regions } from '@/data/regions' // 사용되지 않는 import는 제거
 import Header from '@/components/header' // Header 컴포넌트를 import
 import Footer from '@/components/footer' // Footer 컴포넌트를 import
 
@@ -34,7 +34,7 @@ export default function RegionListings() {
       const shuffled = [...accommodationDetails].sort(() => Math.random() - 0.5);
       setShuffledAccommodations(shuffled);
     }
-  }, [accommodationDetails]);
+  }, []); // 의존성 배열에서 accommodationDetails 제거
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
