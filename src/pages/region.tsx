@@ -2,8 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react' // useRouter 제거
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
