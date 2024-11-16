@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'; // useRouter 훅을 import
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
-// import { regions } from '@/data/regions' // 사용되지 않는 import는 제거
 import Header from '@/components/header' // Header 컴포넌트를 import
 import Footer from '@/components/footer' // Footer 컴포넌트를 import
 
@@ -18,17 +17,12 @@ export default function RegionListings() {
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (router.isReady) { // router.isReady가 true일 때만 실행
-      const storedRegionName = name || localStorage.getItem('regionName');
-      if (storedRegionName) {
-        setRegionName(storedRegionName as string);
-        localStorage.setItem('regionName', storedRegionName as string);
-      } else {
-        // 지역 이름이 없을 경우 기본값 설정 또는 에러 처리
-        setRegionName('기본 지역 이름');
-      }
+    if (router.isReady && name) { // router.isReady와 name이 존재할 때만 실행
+      const storedRegionName = name as string;
+      setRegionName(storedRegionName);
+      localStorage.setItem('regionName', storedRegionName);
     }
-  }, [router.isReady, name]); // 의존성 배열에 router.isReady 추가
+  }, [router.isReady, name]); // 의존성 배열에 router.isReady와 name 추가
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
