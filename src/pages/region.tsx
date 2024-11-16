@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
@@ -10,8 +11,8 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 
 export default function RegionListings({ initialRegionName }) {
-  const [regionName, setRegionName] = useState(initialRegionName);
-  const [shuffledAccommodations, setShuffledAccommodations] = useState(accommodationDetails);
+  const [regionName] = useState(initialRegionName); // setRegionName 제거
+  const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
