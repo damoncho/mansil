@@ -3,41 +3,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'; // useRouter 훅을 import
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
-import Header from '@/components/header' // Header 컴포넌트를 import
-import Footer from '@/components/footer' // Footer 컴포넌트를 import
+import Header from '@/components/header'
+import Footer from '@/components/footer'
 
-export default function RegionListings() {
-  const router = useRouter();
-  const [regionName, setRegionName] = useState('');
-  const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
-
-  useEffect(() => {
-    if (router.isReady) { // router.isReady가 true일 때만 실행
-      const { name } = router.query; // 쿼리에서 지역 이름을 가져옴
-      if (name) {
-        const storedRegionName = decodeURIComponent(name as string); // decodeURIComponent 사용
-        setRegionName(storedRegionName);
-        localStorage.setItem('regionName', storedRegionName);
-      }
-    }
-  }, [router.isReady, router.query.name]); // 의존성 배열에 router.isReady와 router.query.name 추가
+export default function RegionListings({ initialRegionName }) {
+  const [regionName, setRegionName] = useState(initialRegionName);
+  const [shuffledAccommodations, setShuffledAccommodations] = useState(accommodationDetails);
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
       const shuffled = [...accommodationDetails].sort(() => Math.random() - 0.5);
       setShuffledAccommodations(shuffled);
     }
-  }, []); // 의존성 배열에서 accommodationDetails 제거
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Header /> {/* Header 컴포넌트를 사용하여 헤더를 대체 */}
+      <Header />
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <h2 className="text-2xl font-bold mb-6">{regionName ? `${regionName} 추천 숙소` : '추천 숙소'}</h2> {/* 지역 이름을 포함하여 제목 표시 */}
+        <h2 className="text-2xl font-bold mb-6">{regionName ? `${regionName} 추천 숙소` : '추천 숙소'}</h2>
         <div key={regionName} className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {shuffledAccommodations.map((accommodation, index) => {
@@ -66,7 +53,13 @@ export default function RegionListings() {
           </div>
         </div>
       </main>
-      <Footer /> {/* Footer 컴포넌트를 사용하여 푸터를 추가 */}
+      <Footer />
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { name } = context.query;
+  const initialRegionName = name ? decodeURIComponent(name) : '';
+  return { props: { initialRegionName } };
 }
