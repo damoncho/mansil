@@ -20,6 +20,12 @@ export default function RegionListings() {
   useEffect(() => {
     if (name) {
       setRegionName(name as string); // name이 존재할 때만 setRegionName 호출
+      localStorage.setItem('regionName', name as string); // 지역 이름을 로컬 스토리지에 저장
+    } else {
+      const storedRegionName = localStorage.getItem('regionName');
+      if (storedRegionName) {
+        setRegionName(storedRegionName); // 로컬 스토리지에서 지역 이름을 가져옴
+      }
     }
   }, [name]);
 
@@ -30,14 +36,12 @@ export default function RegionListings() {
     }
   }, [accommodationDetails]);
 
-  const region = regions.find(r => r.name === regionName) || regions[0]; // 쿼리에서 지역 이름에 해당하는 region 선택
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header /> {/* Header 컴포넌트를 사용하여 헤더를 대체 */}
       <main className="container mx-auto px-4 py-8 flex-grow">
         <h2 className="text-2xl font-bold mb-6">{regionName ? `${regionName} 추천 숙소` : '추천 숙소'}</h2> {/* 지역 이름을 포함하여 제목 표시 */}
-        <div key={region.name} className="mb-8">
+        <div key={regionName} className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {shuffledAccommodations.map((accommodation, index) => {
               const randomImageIndex = Math.floor(Math.random() * hotelImages.length);
@@ -48,7 +52,7 @@ export default function RegionListings() {
                     <CardContent className="p-0">
                       <Image
                         src={imageUrl.toString()}
-                        alt={`${region.name} 숙소 ${index + 1} 이미지`}
+                        alt={`${regionName} 숙소 ${index + 1} 이미지`}
                         width={800}
                         height={600}
                         className="w-full h-48 object-cover rounded-t-lg"
