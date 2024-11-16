@@ -24,7 +24,7 @@ export default function RegionListings() {
         localStorage.setItem('regionName', storedRegionName);
       }
     }
-  }, [router.isReady, router.query]); // 의존성 배열에 router.isReady와 router.query 추가
+  }, [router.isReady, router.query.name]); // 의존성 배열에 router.isReady와 router.query.name 추가
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
