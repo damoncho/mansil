@@ -1,3 +1,4 @@
+  // Start of Selection
 "use client"
 
 import dynamic from 'next/dynamic'
@@ -183,4 +184,5 @@ export default function LodgingDetail() {
       </main>
       <Footer /> {/* Footer 컴포넌트를 사용하여 푸터를 추가 */}
     </div>
-  )}
+  )
+}
