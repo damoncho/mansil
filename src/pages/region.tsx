@@ -9,6 +9,7 @@ import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import { GetServerSidePropsContext } from 'next'; // GetServerSidePropsContext import 추가
 
 const RegionPage = ({ initialRegionName }: { initialRegionName: string }) => {
   const router = useRouter();
@@ -71,7 +72,7 @@ const RegionPage = ({ initialRegionName }: { initialRegionName: string }) => {
   )
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { name } = context.query;
   return {
     props: {
