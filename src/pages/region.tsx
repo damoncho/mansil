@@ -10,9 +10,19 @@ import { accommodationDetails } from '@/data/accommodationDetails'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
-const RegionPage = () => {
+const RegionPage = ({ initialRegionName }: { initialRegionName: string }) => {
   const router = useRouter();
-  const { name } = router.query; // URL 쿼리 파라미터에서 'name' 가져오기
+  const [regionName, setRegionName] = useState<string | undefined>(initialRegionName);
+
+  useEffect(() => {
+    if (router.isReady && !regionName) {
+      const { name } = router.query;
+      if (typeof name === 'string') {
+        setRegionName(name);
+        console.log(`Region name from query: ${name}`); // 쿼리 파라미터 확인을 위한 로그 추가
+      }
+    }
+  }, [router.isReady, router.query, regionName]);
 
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
@@ -27,7 +37,7 @@ const RegionPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <h2 className="text-2xl font-bold mb-6">{name ? `${name} 추천 숙소` : '추천 숙소'}</h2>
+        <h2 className="text-2xl font-bold mb-6">{regionName ? `${regionName} 추천 숙소` : '추천 숙소'}</h2>
         <div className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {shuffledAccommodations.map((accommodation, index) => {
@@ -59,6 +69,15 @@ const RegionPage = () => {
       <Footer />
     </div>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const { name } = context.query;
+  return {
+    props: {
+      initialRegionName: name || null,
+    },
+  };
 }
 
 export default RegionPage;

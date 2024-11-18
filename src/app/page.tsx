@@ -14,7 +14,11 @@ export default function Home() {
   const router = useRouter();
 
   const handleRegionClick = (regionName: string) => {
-    router.push(`/region?name=${encodeURIComponent(regionName)}`);
+    const encodedRegionName = encodeURIComponent(regionName);
+    console.log(`Navigating to region: ${encodedRegionName}`); // 디버깅을 위한 로그 추가
+    const url = `/region?name=${encodedRegionName}`;
+    console.log(`URL to navigate: ${url}`); // URL 확인을 위한 추가 로그
+    router.push(url);
   };
 
   return (
