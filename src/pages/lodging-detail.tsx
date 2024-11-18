@@ -1,38 +1,47 @@
-  // Start of Selection
-"use client"
+"use client";
 
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Star, Users, Bed, Bath, Wifi, Car, Coffee, MapPin } from 'lucide-react'
-import { hotelImages } from '../data/imageUrls'
-import { accommodationDetails } from '@/data/accommodationDetails'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Star, Users, Bed, Bath, Wifi, Car, Coffee, MapPin } from 'lucide-react';
+import { hotelImages } from '../data/imageUrls';
+import { accommodationDetails } from '@/data/accommodationDetails';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import { GetServerSidePropsContext } from 'next';
 
-const Image = dynamic(() => import('next/image'), { ssr: false })
+const Image = dynamic(() => import('next/image'), { ssr: false });
 
-export default function LodgingDetail() {
+const LodgingDetail = ({ initialTitle }: { initialTitle: string }) => {
   const router = useRouter();
-  const { title } = router.query;
+  const [title, setTitle] = useState<string | undefined>(initialTitle);
   const [accommodation, setAccommodation] = useState<{ title: string; description: string; link: string; } | null>(null);
 
   useEffect(() => {
-    if (router.isReady && title) {
+    if (router.isReady && !title) {
+      const { title: queryTitle } = router.query;
+      if (typeof queryTitle === 'string') {
+        setTitle(decodeURIComponent(queryTitle));
+      }
+    }
+  }, [router.isReady, router.query, title]);
+
+  useEffect(() => {
+    if (title) {
       const foundAccommodation = accommodationDetails.find(acc => acc.title === title);
       setAccommodation(foundAccommodation || null);
     } else {
-      setAccommodation(null); // title이 없을 때 상태 초기화
+      setAccommodation(null);
     }
-  }, [router.isReady, title]); // 의존성 배열에 title 추가
+  }, [title]);
 
   const handleBookingClick = () => {
     if (accommodation && accommodation.link) {
-      window.open(accommodation.link, '_blank'); // 새 탭에서 외부 링크 열기
+      window.open(accommodation.link, '_blank');
     } else {
       alert('외부 링크를 찾을 수 없습니다.');
     }
@@ -182,7 +191,18 @@ export default function LodgingDetail() {
           </TabsContent>
         </Tabs>
       </main>
-      <Footer /> {/* Footer 컴포넌트를 사용하여 푸터를 추가 */}
+      <Footer />
     </div>
-  )
+  );
+};
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { title } = context.query;
+  return {
+    props: {
+      initialTitle: title ? decodeURIComponent(title as string) : null,
+    },
+  };
 }
+
+export default LodgingDetail;

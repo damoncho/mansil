@@ -52,42 +52,43 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">추천 숙소</h2>
-          {regions.map((region, index) => (
-            <div key={region.name} className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">{region.name}</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {[1, 2, 3, 4].map((item) => {
-                  const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
-                  const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
-                  return (
-                    <Link 
-                      href={`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`} 
-                      key={item}
-                    >
-                      <Card className="hover:shadow-lg transition-shadow duration-300">
-                        <CardContent className="p-0">
-                          <Image
-                            src={imageUrl.toString()}
-                            alt={`${region.name} 숙소 ${item} 이미지`}
-                            width={800}
-                            height={600}
-                            className="w-full h-48 object-cover rounded-t-lg"
-                          />
-                        </CardContent>
-                        <CardFooter className="flex flex-col items-start p-4">
-                          <h3 className="font-semibold mb-2">{accommodation.title}</h3>
-                          <p className="text-gray-500 mb-2">{accommodation.description}</p>
-                        </CardFooter>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </div>
+<section className="mt-12">
+  <h2 className="text-2xl font-bold mb-6">추천 숙소</h2>
+  {regions.map((region, index) => (
+    <div key={region.name} className="mb-8">
+      <h3 className="text-xl font-semibold mb-4">{region.name}</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {[1, 2, 3, 4].map((item) => {
+          const imageUrl = hotelImages[(index * 4 + item - 1) % hotelImages.length];
+          const accommodation = accommodationDetails[(index * 4 + item - 1) % accommodationDetails.length];
+          return (
+            <div 
+              key={item}
+              className="group cursor-pointer"
+              onClick={() => router.push(`/lodging-detail?title=${encodeURIComponent(accommodation.title)}`)}
+            >
+              <Card className="hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-0">
+                  <Image
+                    src={imageUrl.toString()}
+                    alt={`${region.name} 숙소 ${item} 이미지`}
+                    width={800}
+                    height={600}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                </CardContent>
+                <CardFooter className="flex flex-col items-start p-4">
+                  <h3 className="font-semibold mb-2">{accommodation.title}</h3>
+                  <p className="text-gray-500 mb-2">{accommodation.description}</p>
+                </CardFooter>
+              </Card>
             </div>
-          ))}
-        </section>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+</section>
       </main>
 
       <Footer />
