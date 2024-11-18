@@ -31,7 +31,7 @@ export default function Home() {
               <div 
                 key={region.name} 
                 className="group cursor-pointer"
-                onClick={() => handleRegionClick(region.name)}
+                onClick={() => router.push(`/region?name=${encodeURIComponent(region.name)}`)}
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <Image
