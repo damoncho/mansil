@@ -1,7 +1,6 @@
 "use client";
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
