@@ -62,7 +62,7 @@ export default function Home() {
 const PopularRegions = () => {
   const router = useRouter();
 
-  const handleCardClick = (regionName: string) => { // 타입 오류 수정: string으로 설정
+  const handleCardClick = (regionName: string) => {
     router.push(`/region?name=${encodeURIComponent(regionName)}`);
   };
 
@@ -74,11 +74,11 @@ const PopularRegions = () => {
           <div 
             key={region.name} 
             className="group cursor-pointer"
-            onClick={() => handleCardClick(region.name)}
+            onClick={() => handleCardClick(region.name)} // region.name이 올바르게 전달되는지 확인
           >
             <div className="relative overflow-hidden rounded-lg">
               <Image
-                src={region.image} // 문자열 경로를 직접 사용
+                src={region.image}
                 alt={`${region.name} 이미지`}
                 width={600}
                 height={400}
