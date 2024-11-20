@@ -1,17 +1,26 @@
 "use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { hotelImages } from '@/data/imageUrls'
-import { accommodationDetails } from '@/data/accommodationDetails'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
+import { useState, useEffect } from 'react';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { hotelImages } from '@/data/imageUrls';
+import { accommodationDetails } from '@/data/accommodationDetails';
+import Link from 'next/link';
+import Image from 'next/image';
 
 // 클라이언트 컴포넌트
 const RegionPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegionContent />
+    </Suspense>
+  );
+};
+
+const RegionContent = () => {
   const [regionName, setRegionName] = useState<string | undefined>(undefined);
   const searchParams = useSearchParams();
   const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
@@ -65,7 +74,7 @@ const RegionPage = () => {
       </main>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default RegionPage;
