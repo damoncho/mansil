@@ -16,14 +16,14 @@ export default function Home() {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <section className="mb-16">
+      <section className="mb-16">
           <h2 className="text-2xl font-bold mb-6">인기 여행지</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {regions.map((region) => (
               <div 
                 key={region.name} 
                 className="group cursor-pointer"
-                onClick={() => router.push(`/region?name=${encodeURIComponent(region.name)}`)}
+                onClick={() => router.push(`/region?name=${encodeURIComponent(region.name)}`)} // 수정된 부분
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <Image

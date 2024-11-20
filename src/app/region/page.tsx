@@ -3,29 +3,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'; // useRouter import 추가
+import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { hotelImages } from '@/data/imageUrls'
 import { accommodationDetails } from '@/data/accommodationDetails'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import { GetServerSidePropsContext } from 'next'; // GetServerSidePropsContext import 추가
 
-const RegionPage = ({ initialRegionName }: { initialRegionName: string }) => {
-  const router = useRouter();
-  const [regionName, setRegionName] = useState<string | undefined>(initialRegionName);
+// 클라이언트 컴포넌트
+const RegionPage = () => {
+  const [regionName, setRegionName] = useState<string | undefined>(undefined);
+  const searchParams = useSearchParams();
+  const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
 
   useEffect(() => {
-    if (router.isReady && !regionName) {
-      const { name } = router.query;
-      if (typeof name === 'string') {
-        setRegionName(name);
-        console.log(`Region name from query: ${name}`); // 쿼리 파라미터 확인을 위한 로그 추가
-      }
+    const name = searchParams.get('name');
+    if (name) {
+      setRegionName(name);
     }
-  }, [router.isReady, router.query, regionName]);
-
-  const [shuffledAccommodations, setShuffledAccommodations] = useState<{ title: string; description: string; link: string; }[]>([]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (accommodationDetails.length > 0) {
@@ -70,15 +66,6 @@ const RegionPage = ({ initialRegionName }: { initialRegionName: string }) => {
       <Footer />
     </div>
   )
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { name } = context.query;
-  return {
-    props: {
-      initialRegionName: name || null,
-    },
-  };
 }
 
 export default RegionPage;

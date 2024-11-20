@@ -44,7 +44,7 @@ export default function Header() {
               {regions.map((region) => (
                 <DropdownMenuItem key={region.name} asChild>
                   <Link 
-                    href={`/region?name=${encodeURIComponent(region.name)}`}
+                    href={`/@page?name=${encodeURIComponent(region.name)}`}
                     onClick={() => handleRegionClick(region.name)}
                   >
                     {region.name}

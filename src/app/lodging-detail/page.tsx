@@ -1,34 +1,29 @@
 "use client";
 
-import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Star, Users, Bed, Bath, Wifi, Car, Coffee, MapPin } from 'lucide-react';
-import { hotelImages } from '../data/imageUrls';
+import { hotelImages } from '@/data/imageUrls';
 import { accommodationDetails } from '@/data/accommodationDetails';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { GetServerSidePropsContext } from 'next';
 
-const Image = dynamic(() => import('next/image'), { ssr: false });
-
-const LodgingDetail = ({ initialTitle }: { initialTitle: string }) => {
-  const router = useRouter();
-  const [title, setTitle] = useState<string | undefined>(initialTitle);
+const LodgingDetail = () => {
+  const searchParams = useSearchParams();
+  const [title, setTitle] = useState<string | undefined>(undefined);
   const [accommodation, setAccommodation] = useState<{ title: string; description: string; link: string; } | null>(null);
 
   useEffect(() => {
-    if (router.isReady && !title) {
-      const { title: queryTitle } = router.query;
-      if (typeof queryTitle === 'string') {
-        setTitle(decodeURIComponent(queryTitle));
-      }
+    const queryTitle = searchParams.get('title');
+    if (queryTitle) {
+      setTitle(decodeURIComponent(queryTitle));
     }
-  }, [router.isReady, router.query, title]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (title) {
@@ -195,14 +190,5 @@ const LodgingDetail = ({ initialTitle }: { initialTitle: string }) => {
     </div>
   );
 };
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { title } = context.query;
-  return {
-    props: {
-      initialTitle: title ? decodeURIComponent(title as string) : null,
-    },
-  };
-}
 
 export default LodgingDetail;
